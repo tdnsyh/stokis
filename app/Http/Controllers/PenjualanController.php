@@ -5,36 +5,44 @@ namespace App\Http\Controllers;
 use App\Models\Stokis;
 use Illuminate\Http\Request;
 use App\Models\Penjualan;
+use Illuminate\Support\Facades\DB;
 
 class PenjualanController extends Controller
 {
     public function index(Request $request)
     {
-        $tahun = $request->get('tahun', now()->year);
+
+        $tahun = $request->get('tahun');
 
         $stokis = Stokis::leftJoin('penjualan', function ($join) use ($tahun) {
-            $join->on('stokis.id', '=', 'penjualan.stokis_id')
-                ->where('penjualan.tahun', '=', $tahun);
+            $join->on('stokis.id', '=', 'penjualan.stokis_id');
+            if ($tahun) {
+                $join->where('penjualan.tahun', '=', $tahun);
+            }
         })->select(
             'stokis.id',
             'stokis.nama_stokis',
             'stokis.member',
             'stokis.nama_member',
-            'penjualan.jan',
-            'penjualan.feb',
-            'penjualan.mar',
-            'penjualan.apr',
-            'penjualan.mei',
-            'penjualan.jun',
-            'penjualan.jul',
-            'penjualan.agt',
-            'penjualan.sep',
-            'penjualan.okt',
-            'penjualan.nov',
-            'penjualan.des',
-            'penjualan.total',
-            'penjualan.updated_at',
-            'penjualan.tahun'
+            DB::raw('SUM(penjualan.jan) as jan'),
+            DB::raw('SUM(penjualan.feb) as feb'),
+            DB::raw('SUM(penjualan.mar) as mar'),
+            DB::raw('SUM(penjualan.apr) as apr'),
+            DB::raw('SUM(penjualan.mei) as mei'),
+            DB::raw('SUM(penjualan.jun) as jun'),
+            DB::raw('SUM(penjualan.jul) as jul'),
+            DB::raw('SUM(penjualan.agt) as agt'),
+            DB::raw('SUM(penjualan.sep) as sep'),
+            DB::raw('SUM(penjualan.okt) as okt'),
+            DB::raw('SUM(penjualan.nov) as nov'),
+            DB::raw('SUM(penjualan.des) as des'),
+            DB::raw('SUM(penjualan.total) as total'),
+            DB::raw('MAX(penjualan.updated_at) as updated_at')
+        )->groupBy(
+            'stokis.id',
+            'stokis.nama_stokis',
+            'stokis.member',
+            'stokis.nama_member'
         )->get();
 
         return view('dashboard.penjualan.index', compact('stokis', 'tahun'));
@@ -96,9 +104,11 @@ class PenjualanController extends Controller
 
     public function detail($stokis_id)
     {
+
         $stokis = Stokis::with(['kokab', 'kecamatan'])->findOrFail($stokis_id);
+        $title = trim($stokis->nama_stokis) . ' - ' . trim($stokis->nama_member);
         $penjualan = Penjualan::where('stokis_id', $stokis_id)->get();
 
-        return view('dashboard.penjualan.detail', compact('stokis', 'penjualan'));
+        return view('dashboard.penjualan.detail', compact('stokis', 'penjualan', 'title'));
     }
 }

@@ -13,9 +13,11 @@
                     <div class="col">
                         <form method="GET" action="{{ route('penjualan.index') }}" class="mb-3">
                             <select name="tahun" id="tahun" class="form-select" onchange="this.form.submit()">
+                                <option value="" {{ !$tahun ? 'selected' : '' }}>Semua Tahun</option>
                                 @for ($y = now()->year - 5; $y <= now()->year + 5; $y++)
                                     <option value="{{ $y }}" {{ $tahun == $y ? 'selected' : '' }}>
-                                        {{ $y }}</option>
+                                        {{ $y }}
+                                    </option>
                                 @endfor
                             </select>
                         </form>

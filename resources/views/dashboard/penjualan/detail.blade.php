@@ -1,4 +1,7 @@
 <x-layout>
+    <x-slot:title>
+        {{ $title }}
+    </x-slot:title>
     <div class="card">
         <div class="card-body">
             <h3 class="fw-semibold">Detail Penjualan {{ $stokis->nama_stokis }}</h3>
@@ -65,9 +68,9 @@
                                 @endif
                             @endforeach
                         </tbody>
-                        <tfoot>
+                        <tfoot class="fw-bold">
                             <tr>
-                                <td><strong>Subtotal</strong></td>
+                                <td class="rounded-start"><strong>Subtotal</strong></td>
                                 <td>{{ $penjualan->sum('jan') ?? '-' }}</td>
                                 <td>{{ $penjualan->sum('feb') ?? '-' }}</td>
                                 <td>{{ $penjualan->sum('mar') ?? '-' }}</td>
@@ -80,7 +83,7 @@
                                 <td>{{ $penjualan->sum('okt') ?? '-' }}</td>
                                 <td>{{ $penjualan->sum('nov') ?? '-' }}</td>
                                 <td>{{ $penjualan->sum('des') ?? '-' }}</td>
-                                <td>{{ $penjualan->sum('total') ?? '-' }}</td>
+                                <td class="rounded-end">{{ $penjualan->sum('total') ?? '-' }}</td>
                             </tr>
                         </tfoot>
                     </table>
