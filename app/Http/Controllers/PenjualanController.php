@@ -69,28 +69,26 @@ class PenjualanController extends Controller
             'des' => 'nullable|integer|min:0',
         ]);
 
-        $penjualan = Penjualan::updateOrCreate(
-            ['stokis_id' => $request->stokis_id, 'tahun' => $request->tahun],
-            [
-                'jan' => $request->quartal === 'Q1' ? $request->jan : 0,
-                'feb' => $request->quartal === 'Q1' ? $request->feb : 0,
-                'mar' => $request->quartal === 'Q1' ? $request->mar : 0,
-                'apr' => $request->quartal === 'Q2' ? $request->apr : 0,
-                'mei' => $request->quartal === 'Q2' ? $request->mei : 0,
-                'jun' => $request->quartal === 'Q2' ? $request->jun : 0,
-                'jul' => $request->quartal === 'Q3' ? $request->jul : 0,
-                'agt' => $request->quartal === 'Q3' ? $request->agt : 0,
-                'sep' => $request->quartal === 'Q3' ? $request->sep : 0,
-                'okt' => $request->quartal === 'Q4' ? $request->okt : 0,
-                'nov' => $request->quartal === 'Q4' ? $request->nov : 0,
-                'des' => $request->quartal === 'Q4' ? $request->des : 0,
-            ]
-        );
+        $penjualan = Penjualan::firstOrNew(['stokis_id' => $request->stokis_id, 'tahun' => $request->tahun]);
+
+        $penjualan->jan = $request->quartal === 'Q1' ? $request->jan : ($penjualan->jan ?? 0);
+        $penjualan->feb = $request->quartal === 'Q1' ? $request->feb : ($penjualan->feb ?? 0);
+        $penjualan->mar = $request->quartal === 'Q1' ? $request->mar : ($penjualan->mar ?? 0);
+        $penjualan->apr = $request->quartal === 'Q2' ? $request->apr : ($penjualan->apr ?? 0);
+        $penjualan->mei = $request->quartal === 'Q2' ? $request->mei : ($penjualan->mei ?? 0);
+        $penjualan->jun = $request->quartal === 'Q2' ? $request->jun : ($penjualan->jun ?? 0);
+        $penjualan->jul = $request->quartal === 'Q3' ? $request->jul : ($penjualan->jul ?? 0);
+        $penjualan->agt = $request->quartal === 'Q3' ? $request->agt : ($penjualan->agt ?? 0);
+        $penjualan->sep = $request->quartal === 'Q3' ? $request->sep : ($penjualan->sep ?? 0);
+        $penjualan->okt = $request->quartal === 'Q4' ? $request->okt : ($penjualan->okt ?? 0);
+        $penjualan->nov = $request->quartal === 'Q4' ? $request->nov : ($penjualan->nov ?? 0);
+        $penjualan->des = $request->quartal === 'Q4' ? $request->des : ($penjualan->des ?? 0);
 
         $penjualan->total = $penjualan->jan + $penjualan->feb + $penjualan->mar
             + $penjualan->apr + $penjualan->mei + $penjualan->jun
             + $penjualan->jul + $penjualan->agt + $penjualan->sep
             + $penjualan->okt + $penjualan->nov + $penjualan->des;
+
         $penjualan->save();
 
         return redirect()->route('penjualan.index')->with('success', 'Penjualan berhasil ditambahkan.');

@@ -116,31 +116,30 @@
     </div>
     <script>
         document.getElementById('quartal').addEventListener('change', function() {
-            const quartalSections = {
-                Q1: ['jan-mar'],
-                Q2: ['apr-jun'],
-                Q3: ['jul-sep'],
-                Q4: ['okt-des']
-            };
-
-            // Sembunyikan semua field terlebih dahulu
-            document.querySelectorAll('#quartal-fields .col-md-4').forEach(section => {
-                section.style.display = 'none';
+            // Hide all inputs
+            document.querySelectorAll('.jan-mar, .apr-jun, .jul-sep, .okt-des').forEach(function(el) {
+                el.style.display = 'none';
             });
 
+            // Show inputs based on selected quartal
             const selectedQuartal = this.value;
-
-            if (selectedQuartal && quartalSections[selectedQuartal]) {
-                // Tampilkan hanya field yang sesuai dengan quartal terpilih
-                quartalSections[selectedQuartal].forEach(className => {
-                    document.querySelectorAll(`#quartal-fields .${className}`).forEach(section => {
-                        section.style.display = 'block'; // Tampilkan elemen yang sesuai
-                    });
+            if (selectedQuartal === 'Q1') {
+                document.querySelectorAll('.jan-mar').forEach(function(el) {
+                    el.style.display = 'block';
+                });
+            } else if (selectedQuartal === 'Q2') {
+                document.querySelectorAll('.apr-jun').forEach(function(el) {
+                    el.style.display = 'block';
+                });
+            } else if (selectedQuartal === 'Q3') {
+                document.querySelectorAll('.jul-sep').forEach(function(el) {
+                    el.style.display = 'block';
+                });
+            } else if (selectedQuartal === 'Q4') {
+                document.querySelectorAll('.okt-des').forEach(function(el) {
+                    el.style.display = 'block';
                 });
             }
         });
-
-        // Trigger perubahan untuk inisialisasi awal
-        document.getElementById('quartal').dispatchEvent(new Event('change'));
     </script>
 </x-layout>
