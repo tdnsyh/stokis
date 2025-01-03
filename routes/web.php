@@ -28,5 +28,4 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('penjualan', PenjualanController::class);
     Route::get('penjualan/{stokis_id}/detail', [PenjualanController::class, 'detail'])->name('penjualan.detail');
     Route::get('laporan', [LaporanController::class, 'index'])->name('laporan.index');
-    Route::get('laporan/export-excel', [LaporanController::class, 'exportExcel'])->name('laporan.exportExcel');
 });
