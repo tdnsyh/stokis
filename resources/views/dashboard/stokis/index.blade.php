@@ -10,7 +10,7 @@
                 <x-alert></x-alert>
                 <form action="{{ route('stokis.index') }}" method="GET" class="mb-3">
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-3">
                             <select class="form-select" name="kecamatan_id">
                                 <option value="">Pilih Kecamatan</option>
                                 @foreach ($kecamatans as $kecamatan)
@@ -20,7 +20,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-3">
                             <input type="text" name="search" class="form-control" value="{{ request('search') }}"
                                 placeholder="Cari Stokis atau Member">
                         </div>

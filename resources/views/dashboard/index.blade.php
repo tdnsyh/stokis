@@ -5,7 +5,7 @@
             <p class="mb-0">Tampilan keseluruhan yang memudahkan pengelolaan data stokis, penjualan, dan wilayah secara
                 efisien.</p>
             <div class="mt-4">
-                <div class="row row-cols-1 row-cols-4">
+                <div class="row row-cols-1 row-cols-md-4 g-4">
                     <div class="col">
                         <div class="card bg-primary">
                             <div class="card-body">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <h3>Grafik</h3>
-                <div class="row row-cols-1 row-cols-2">
+                <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col">
                         <canvas id="penjualanChart"></canvas>
                     </div>
